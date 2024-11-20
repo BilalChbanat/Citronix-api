@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732032409866-1
+      author: Youcode
+      changes:
+        - createTable:
+            tableName: tree
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: plantation_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: field_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_tree_field
+            baseTableName: tree
+            baseColumnNames: field_id
+            referencedTableName: field
+            referencedColumnNames: id
+            onDelete: CASCADE
