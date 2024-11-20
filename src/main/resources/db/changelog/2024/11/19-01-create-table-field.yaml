@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-field-table
+      id: 2
       author: Youcode
       changes:
         - createTable:
@@ -34,4 +34,3 @@ databaseChangeLog:
             baseColumnNames: farm_id
             referencedTableName: farm
             referencedColumnNames: id
-            onDelete: CASCADE
