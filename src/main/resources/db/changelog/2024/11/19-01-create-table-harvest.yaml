@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732032527433-1
+      author: Youcode
+      changes:
+        - createTable:
+            tableName: harvest
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: season
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: harvest_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_quantity
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false

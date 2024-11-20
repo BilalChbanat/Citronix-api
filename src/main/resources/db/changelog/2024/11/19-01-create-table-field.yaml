@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-field-table
+      author: Youcode
+      changes:
+        - createTable:
+            tableName: field
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: area
+                  type: DOUBLE PRECISION
+                  constraints:
+                    nullable: false
+              - column:
+                  name: farm_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_field_farm
+            baseTableName: field
+            baseColumnNames: farm_id
+            referencedTableName: farm
+            referencedColumnNames: id
+            onDelete: CASCADE
