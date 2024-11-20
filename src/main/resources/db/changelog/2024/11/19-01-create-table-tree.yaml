@@ -34,4 +34,3 @@ databaseChangeLog:
             baseColumnNames: field_id
             referencedTableName: field
             referencedColumnNames: id
-            onDelete: CASCADE
