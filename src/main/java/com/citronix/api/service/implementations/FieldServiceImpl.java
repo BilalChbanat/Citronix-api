@@ -64,6 +64,8 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public Page<FieldDto> findAll(Pageable pageable) {
-        return fieldRepository.findAll(pageable).map(fieldMapper::toDto);
+        return fieldRepository.findAll(pageable)
+                .map(fieldMapper::toDto);
     }
+
 }
