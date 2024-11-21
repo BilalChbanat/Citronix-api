@@ -101,18 +101,6 @@ public class FarmServiceTests {
         verify(farmRepository, times(1)).findById(1L);
     }
 
-//    @Test
-//    void testDeleteFarm_Success() {
-//        // Arrange
-//        when(farmRepository.existsById(1L)).thenReturn(true);
-//
-//        // Act
-//        farmService.delete(1L);
-//
-//        // Assert
-//        verify(farmRepository, times(1)).deleteById(1L);
-//    }
-
     @Test
     void testDeleteFarm_NotFound() {
         // Arrange

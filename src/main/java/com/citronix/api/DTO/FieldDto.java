@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 public class FieldDto {
 
-//    private Long id;
+    private Long id;
 
     @NotBlank(message = "Field name is required")
     private String name;
