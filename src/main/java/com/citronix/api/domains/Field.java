@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 public class Field {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -22,7 +22,7 @@ public class Field {
     private double area;
 
     @ManyToOne
-    @JoinColumn(name = "farm_id",nullable = false)
+    @JoinColumn(name = "farm_id", nullable = false)
     private Farm farm;
 
     @OneToMany(mappedBy = "field")

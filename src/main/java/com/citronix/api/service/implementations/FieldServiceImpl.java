@@ -40,7 +40,6 @@ public class FieldServiceImpl implements FieldService {
         return fieldMapper.toDto(fieldRepository.save(field));
     }
 
-
     @Override
     public void delete(Long id) {
         Field field = fieldRepository.findById(id)
@@ -56,10 +55,14 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public FieldDto update(Long id, FieldDto fieldDto) {
-        Field field = findById(id);
+        Field existingField = findById(id);
+
         Field fieldUpdate = fieldMapper.toField(fieldDto);
-        fieldUpdate.setId(field.getId());
-        return fieldMapper.toDto(fieldRepository.save(fieldUpdate));
+        fieldUpdate.setId(existingField.getId());
+        fieldUpdate.setFarm(existingField.getFarm());
+
+        Field updatedField = fieldRepository.save(fieldUpdate);
+        return fieldMapper.toDto(updatedField);
     }
 
     @Override
