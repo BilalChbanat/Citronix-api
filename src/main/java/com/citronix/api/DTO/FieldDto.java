@@ -21,6 +21,7 @@ public class FieldDto {
 
     @Positive(message = "Area must be greater than zero")
     @NotNull(message = "Area cannot be null")
+
     private double area;
 
     @NotNull(message = "Farm ID is required")

@@ -3,6 +3,7 @@ package com.citronix.api.controllers;
 
 import com.citronix.api.DTO.FieldDto;
 import com.citronix.api.service.interfaces.FieldService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ public class FieldController {
     private final FieldService fieldService;
 
     @PostMapping("/save")
-    public ResponseEntity<FieldDto> createField(@RequestBody FieldDto fieldDto) {
+    public ResponseEntity<FieldDto> createField(@Valid @RequestBody FieldDto fieldDto) {
         FieldDto createdField = fieldService.create(fieldDto);
         return ResponseEntity.ok(createdField);
     }
@@ -29,13 +30,13 @@ public class FieldController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<FieldDto> updateField(@PathVariable Long id, @RequestBody FieldDto fieldDto) {
+    public ResponseEntity<FieldDto> updateField( @PathVariable Long id,@Valid @RequestBody FieldDto fieldDto) {
         FieldDto updatedField = fieldService.update(id, fieldDto);
         return ResponseEntity.ok(updatedField);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteField(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteField(@Valid @PathVariable Long id) {
         fieldService.delete(id);
         return ResponseEntity.noContent().build();
     }

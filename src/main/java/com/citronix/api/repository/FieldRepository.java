@@ -10,5 +10,10 @@ public interface FieldRepository extends JpaRepository<Field, Long> {
     @Query("SELECT COALESCE(SUM(f.area), 0) FROM Field f WHERE f.farm.id = :farmId")
     double findTotalAreaByFarmId(@Param("farmId") Long farmId);
 
+    @Query("SELECT COUNT(f) FROM Field f WHERE f.farm.id = :farmId")
+    long countByFarmId(@Param("farmId") Long farmId);
+
     Boolean existsByName(String name);
+
+
 }
