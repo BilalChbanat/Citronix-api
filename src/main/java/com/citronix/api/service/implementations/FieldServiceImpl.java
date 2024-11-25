@@ -25,20 +25,37 @@ public class FieldServiceImpl implements FieldService {
 
     @Override
     public FieldDto create(FieldDto fieldRequestDTO) {
+        // Fetch the farm and ensure it exists
         Farm farm = farmRepository.findById(fieldRequestDTO.getFarmId())
                 .orElseThrow(() -> new EntityNotFoundException("Farm with ID " + fieldRequestDTO.getFarmId() + " not found"));
 
+        // Calculate the total area of existing fields in the farm
         double totalFieldsArea = fieldRepository.findTotalAreaByFarmId(farm.getId());
-
         double remainingArea = farm.getArea() - totalFieldsArea;
+
+        // Check if the field's area exceeds the farm's remaining area
         if (fieldRequestDTO.getArea() > remainingArea) {
             throw new IllegalArgumentException("The field's area exceeds the farm's remaining area. Available area: " + remainingArea);
         }
 
+        // Check if the field's area exceeds 50% of the farm's total area
+        double maxAllowedFieldArea = farm.getArea() * 0.5;
+        if (fieldRequestDTO.getArea() > maxAllowedFieldArea) {
+            throw new IllegalArgumentException("The field's area exceeds 50% of the farm's total area. Maximum allowed: " + maxAllowedFieldArea);
+        }
+
+        // Check if the farm already has 10 fields
+        long fieldCountInFarm = fieldRepository.countByFarmId(farm.getId());
+        if (fieldCountInFarm >= 10) {
+            throw new IllegalArgumentException("The farm already has the maximum allowed number of fields (10).");
+        }
+
+        // Map DTO to entity, assign the farm, and save the field
         Field field = fieldMapper.toField(fieldRequestDTO);
         field.setFarm(farm);
         return fieldMapper.toDto(fieldRepository.save(field));
     }
+
 
     @Override
     public void delete(Long id) {
