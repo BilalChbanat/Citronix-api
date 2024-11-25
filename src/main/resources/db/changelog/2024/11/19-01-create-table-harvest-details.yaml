@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1732032853045-1
+      author: Youcode
+      changes:
+        - createTable:
+            tableName: harvest_detail
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tree_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: harvest_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: harvest_detail
+            baseColumnNames: tree_id
+            referencedTableName: tree
+            referencedColumnNames: id
+            constraintName: fk_harvest_detail_tree
+        - addForeignKeyConstraint:
+            baseTableName: harvest_detail
+            baseColumnNames: harvest_id
+            referencedTableName: harvest
+            referencedColumnNames: id
+            constraintName: fk_harvest_detail_harvest
