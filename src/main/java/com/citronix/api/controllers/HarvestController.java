@@ -40,7 +40,7 @@ public class HarvestController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteHarvest(@Valid @PathVariable Long id) {
+    public ResponseEntity<Void> deleteHarvest( @PathVariable Long id) {
         harvestService.delete(id);
         return ResponseEntity.noContent().build();
     }

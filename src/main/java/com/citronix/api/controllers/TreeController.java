@@ -36,7 +36,7 @@ public class TreeController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteTree(@Valid @PathVariable Long id) {
+    public ResponseEntity<Void> deleteTree( @PathVariable Long id) {
         treeService.delete(id);
         return ResponseEntity.noContent().build();
     }

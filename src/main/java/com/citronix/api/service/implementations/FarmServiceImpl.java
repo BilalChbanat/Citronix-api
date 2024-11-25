@@ -1,5 +1,6 @@
 package com.citronix.api.service.implementations;
 
+import com.citronix.api.DTO.TreeDto;
 import com.citronix.api.domains.Farm;
 import com.citronix.api.repository.FarmRepository;
 import com.citronix.api.service.interfaces.FarmService;
@@ -7,6 +8,8 @@ import com.citronix.api.DTO.FarmDto;
 import com.citronix.api.exception.EntityAlreadyExistsException;
 import com.citronix.api.exception.EntityNotFoundException;
 import com.citronix.api.mapper.FarmMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,8 +58,8 @@ public class FarmServiceImpl implements FarmService {
     }
 
     @Override
-    public List<Farm> findAll() {
-        return farmRepository.findAll();
+    public Page<FarmDto> findAll(Pageable pageable) {
+        return farmRepository.findAll(pageable).map(farmMapper::toDto);
     }
 
 

@@ -34,49 +34,44 @@ public class HarvestServiceImpl implements HarvestService {
 
     @Override
     public HarvestDto create(HarvestDto harvestDto) {
-        // Map DTO to Harvest entity
         Harvest harvest = harvestMapper.toHarvest(harvestDto);
 
-        // Validate and set season
         if (harvestDto.getSeason() != null) {
             harvest.setSeason(SeasonType.valueOf(harvestDto.getSeason().toUpperCase()));
         }
 
-        // Validate and set harvest date
         if (harvestDto.getHarvestDate() != null) {
             harvest.setHarvestDate(LocalDate.parse(harvestDto.getHarvestDate()));
         }
 
-        // Retrieve all trees (you might need a specific field or farm context for this)
-        List<Tree> trees = treeRepository.findAll(); // Adjust query if needed
+        List<Tree> trees = treeRepository.findAll();
 
-        // Sum up the productivity of all productive trees
         double totalQuantity = 0.0;
+        List<HarvestDetail> harvestDetails = new ArrayList<>();
         for (Tree tree : trees) {
-            if (tree.isProductiveAge()) { // Ensure the tree is within productive age
-                double productivity = tree.getProductivity();
-                totalQuantity += productivity;
+            double productivity = tree.getProductivity();
+            totalQuantity += productivity;
 
-                // Create and save HarvestDetail for each tree
-                HarvestDetail detail = new HarvestDetail();
-                detail.setTree(tree);
-                detail.setQuantity(productivity);
-                detail.setHarvest(harvest);
-
-                // Save each HarvestDetail individually
-                harvestDetailRepository.save(detail);
-            }
+            HarvestDetail detail = new HarvestDetail();
+            detail.setTree(tree);
+            detail.setQuantity(productivity);
+            detail.setHarvest(harvest);
+            harvestDetails.add(detail);
         }
 
-        // Save the harvest to the database
         harvest = harvestRepository.save(harvest);
 
-        // Map the saved harvest to DTO and set total quantity
+        if (!harvestDetails.isEmpty()) {
+            harvestDetailRepository.saveAll(harvestDetails);
+        }
+
         HarvestDto responseDto = harvestMapper.toDto(harvest);
         responseDto.setTotalQuantity(totalQuantity);
 
         return responseDto;
     }
+
+
 
     @Override
     public HarvestDto update(Long id, HarvestDto harvestDto) {

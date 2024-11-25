@@ -5,11 +5,11 @@ import com.citronix.api.service.interfaces.FarmService;
 import com.citronix.api.DTO.FarmDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/farms")
@@ -25,8 +25,8 @@ public class FarmController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Farm>> getAllFarms() {
-        List<Farm> farms = farmService.findAll();
+    public ResponseEntity<Page<FarmDto>> getAllFarms(Pageable pageable) {
+        Page<FarmDto> farms = farmService.findAll(pageable);
         return ResponseEntity.ok(farms);
     }
 

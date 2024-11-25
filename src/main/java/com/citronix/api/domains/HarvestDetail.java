@@ -13,7 +13,7 @@ import lombok.*;
 public class HarvestDetail {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private double quantity;

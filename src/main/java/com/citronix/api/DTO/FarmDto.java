@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 public class FarmDto {
 
+
+
     @NotBlank(message = "Name is required")
     private String name;
 

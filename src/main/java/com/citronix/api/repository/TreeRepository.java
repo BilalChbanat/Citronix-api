@@ -11,6 +11,4 @@ public interface TreeRepository extends JpaRepository<Tree, Long> {
 
     List<Tree> findByFieldId(@Param("fieldId") Long fieldId);
 
-
-
 }

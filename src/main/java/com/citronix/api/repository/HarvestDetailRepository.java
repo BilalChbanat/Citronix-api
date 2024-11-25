@@ -10,6 +10,4 @@ import java.util.List;
 @Repository
 public interface HarvestDetailRepository extends JpaRepository<HarvestDetail, Long> {
 
-
-
 }

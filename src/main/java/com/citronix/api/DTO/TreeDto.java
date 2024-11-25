@@ -19,15 +19,15 @@ public class TreeDto {
 
     private Long id;
 
-    @NotNull(message = "Tree date is required")
-    @NotBlank(message = "Tree date is required")
+
     private LocalDate plantationDate;
 
     @NotNull(message = "Tree status is required")
     @NotBlank(message = "Tree status is required")
     private String status;
+
+    @NotNull(message = "Field is required")
     private Long fieldId;
 
-    @NotNull
     private Boolean isProductive;
 }

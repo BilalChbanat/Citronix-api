@@ -12,12 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class FarmServiceTests {
@@ -158,13 +161,19 @@ public class FarmServiceTests {
         Farm farm2 = Farm.builder().id(2L).name("Farm 2").location("Location 2").area(75.0).build();
         List<Farm> farms = List.of(farm1, farm2);
 
-        when(farmRepository.findAll()).thenReturn(farms);
+        Pageable pageable = PageRequest.of(0, 10); // Mock pageable (page 0, size 10)
+        Page<Farm> farmPage = new PageImpl<>(farms, pageable, farms.size()); // Wrap farms in a Page object
+
+        when(farmRepository.findAll(pageable)).thenReturn(farmPage);
 
         // Act
-        List<Farm> result = farmService.findAll();
+        Page<FarmDto> result = farmService.findAll(pageable);
 
         // Assert
-        assertEquals(2, result.size());
-        verify(farmRepository, times(1)).findAll();
+        assertNotNull(result);
+        assertEquals(2, result.getTotalElements());
+        assertEquals(2, result.getContent().size());
+        verify(farmRepository, times(1)).findAll(pageable);
     }
+
 }

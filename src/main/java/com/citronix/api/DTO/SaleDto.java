@@ -21,7 +21,7 @@ public class SaleDto {
     @Positive(message = "Quantity must be a positive value")
     private double quantity;
 
-    @NotBlank(message = "Client name cannot be blank")
+    @NotNull(message = "Client name cannot be blank")
     private String client;
 
     @PositiveOrZero(message = "Revenue must be zero or a positive value")
