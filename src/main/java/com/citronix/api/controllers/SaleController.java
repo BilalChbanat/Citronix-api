@@ -40,4 +40,6 @@ public class SaleController {
         return ResponseEntity.noContent().build();
     }
 
+
+
 }

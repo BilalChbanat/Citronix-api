@@ -41,6 +41,4 @@ public class FarmController {
         farmService.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }
